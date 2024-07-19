@@ -63,14 +63,14 @@ def mingchaosignin(gameheaders, roleId, userId, month):
     response = requests.post(urlsignin, headers=headers, data=datasign)
     # 检查响应状态码
     if response.status_code != 200:
-        return (f"请求失败，状态码: {response.status_code}, 消息: {response.text}")
+        return (f"请求失败，状态码: {response.status_code}, 消息: {response.text}"), False
     response_data = response.json()
     # 检查响应中的 code
     if response_data.get("code") != 200:
-        return (f"请求失败，响应代码: {response_data.get('code')}, 消息: {response_data.get('msg')}")
+        return (f"请求失败，响应代码: {response_data.get('code')}, 消息: {response_data.get('msg')}"), False
     # 如果成功，调用 getsignprize 获取奖品列表
     try:
-        goods_names = getsignprize(gameheaders, roleId, userId)
+        goods_names = getsignprize(gameheaders, roleId, userId), True
         return goods_names
     except ValueError as e:
         print(f"获取奖品失败: {e}")
@@ -78,9 +78,4 @@ def mingchaosignin(gameheaders, roleId, userId, month):
     
 def game_check_in(token, roleId, userId, month):
     gameheaders = getgameheaders(token)
-    gamemessage=mingchaosignin(gameheaders, roleId, userId, month)
-    if gamemessage:
-        log_message("今天的奖励为：" + gamemessage)
-    else:
-        log_message("签到失败或没有奖励")
-    return gamemessage
+    return mingchaosignin(gameheaders, roleId, userId, month)

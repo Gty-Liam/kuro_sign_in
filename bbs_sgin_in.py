@@ -1,3 +1,5 @@
+import random
+
 import requests
 from log import log_message
 import time
@@ -169,7 +171,7 @@ def KuroBBS_sign_in(token, devcode,distinct_id):
         msg = msg+"第" + \
             str((i+1))+"个帖子" + \
             str(likeposts(postid, userid,bbsheaders))+"\n\n"
-        time.sleep(3)
+        time.sleep(3 + random.randint(0,100))
         i += 1
         if i > 4:
             break
