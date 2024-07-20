@@ -1,6 +1,7 @@
 {
-    "start_hour": 12,
-    "end_hour": 14,
+    "start_hour": 8,
+    "sleep_start": 10,
+    "sleep_end": 20,
     "serverKey": "SCT252082TwwlIhTLEuEgPoYpMcXsZEmje",
     "distinct_id": "69dc1afe-14b7-470e-8f6e-29282d913f41",
     "users": [

@@ -30,6 +30,15 @@ def sc_send(text, desp, key=''):
 
 
 def job():
+    # 随机睡眠一段时间
+    with open('data.json', 'r', encoding="utf-8") as f:
+        data = json.load(f)
+    sleep_start = data['sleep_start']
+    sleep_end = data['sleep_end']
+    sleep_time = random.randint(sleep_start, sleep_end)
+    print("开始sleep: ", (sleep_time / 60), " 分钟")
+    time.sleep(sleep_time)
+
     msg = check_in()
 
     with open('data.json', 'r', encoding="utf-8") as f:
@@ -83,33 +92,18 @@ def schedule_random_task():
     with open('data.json', 'r', encoding="utf-8") as f:
         data = json.load(f)
     start_hour = data['start_hour']
-    end_hour = data['end_hour']
 
-    # 生成当天6:00到9:00之间的随机时间
+    # 8点执行脚本
     start_time = datetime.now().replace(hour=start_hour, minute=0, second=0, microsecond=0)
-    end_time = datetime.now().replace(hour=end_hour, minute=0, second=0, microsecond=0)
-    # test_time = datetime.now() + timedelta(min=15)
-
-    random_seconds = random.randint(0, int((end_time - start_time).total_seconds()))
-    random_time = start_time + timedelta(seconds=random_seconds)
-
-    # print(f"今天的任务将在 {test_time.strftime('%H:%M:%S')} 执行")
-    print(f"今天的任务将在 {random_time.strftime('%H:%M:%S')} 执行")
+    print(f"任务将在每日 {start_time.strftime('%H:%M:%S')} 执行")
 
     # 在生成的随机时间调度任务
-    schedule_time = random_time.strftime('%H:%M')
-    # schedule_time = test_time.strftime('%H:%M')
+    schedule_time = start_time.strftime('%H:%M')
     schedule.every().day.at(schedule_time).do(job)
-
-
-
 
 
 if __name__ == "__main__":
     print("job start")
-    # 每天调用一次 schedule_random_task 来设置第二天的任务
-    schedule.every().day.at("00:00").do(schedule_random_task)
-
     # 立即运行一次以设置当天的任务
     schedule_random_task()
     while True:
