@@ -31,7 +31,7 @@ def sc_send(text, desp, key=''):
 
 def job():
     # 随机睡眠一段时间
-    with open('data.json', 'r', encoding="utf-8") as f:
+    with open('conf/data.json', 'r', encoding="utf-8") as f:
         data = json.load(f)
     sleep_start = data['sleep_start']
     sleep_end = data['sleep_end']
@@ -41,7 +41,7 @@ def job():
 
     msg = check_in()
 
-    with open('data.json', 'r', encoding="utf-8") as f:
+    with open('conf/data.json', 'r', encoding="utf-8") as f:
         data = json.load(f)
     serverKey = data['serverKey']
     # 发送server酱通知
@@ -53,7 +53,7 @@ def check_in():
     month = now.strftime("%m")
 
     # 从JSON文件中读取数据
-    with open('data.json', 'r', encoding="utf-8") as f:
+    with open('conf/data.json', 'r', encoding="utf-8") as f:
         data = json.load(f)
     distinct_id = data['distinct_id']
     # 从数据中获取用户数据列表
@@ -89,7 +89,7 @@ def check_in():
 
 
 def schedule_random_task():
-    with open('data.json', 'r', encoding="utf-8") as f:
+    with open('conf/data.json', 'r', encoding="utf-8") as f:
         data = json.load(f)
     start_hour = data['start_hour']
 
